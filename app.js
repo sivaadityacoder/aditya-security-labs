@@ -82,7 +82,7 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 // --- Backend API Connection ---
-const API_BASE_URL = "https://your-ngrok-url.ngrok.app"; // Replace when ngrok is running
+const API_BASE_URL = "https://tricky-webs-watch.loca.lt"; // Auto-connected tunnel
 
 const osInput = document.getElementById('os-command-input');
 const osResponse = document.getElementById('os-response');
