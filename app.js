@@ -80,3 +80,46 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 });
+
+// --- Backend API Connection ---
+const API_BASE_URL = "https://your-ngrok-url.ngrok.app"; // Replace when ngrok is running
+
+const osInput = document.getElementById('os-command-input');
+const osResponse = document.getElementById('os-response');
+
+if (osInput) {
+    osInput.addEventListener('keypress', async (e) => {
+        if (e.key === 'Enter' && osInput.value.trim() !== '') {
+            const query = osInput.value;
+            osInput.value = '';
+            osInput.disabled = true;
+            osInput.placeholder = "Querying ASL Neural Engine...";
+            
+            osResponse.style.display = 'block';
+            osResponse.innerHTML = `<span style="color:var(--text-secondary)">root@asl-engine:~# ${query}</span><br><br><span style="color:#666">Analyzing Code Graph Context...</span>`;
+
+            try {
+                const res = await fetch(`${API_BASE_URL}/api/chat`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ message: query, history: [] })
+                });
+
+                if (!res.ok) throw new Error("Connection failed");
+                const data = await res.json();
+                
+                if (data.success) {
+                    osResponse.innerHTML = `<span style="color:var(--text-secondary)">root@asl-engine:~# ${query}</span><br><br>${data.response.replace(/\\n/g, '<br>')}`;
+                } else {
+                    osResponse.innerHTML = `<span style="color:var(--text-secondary)">root@asl-engine:~# ${query}</span><br><br><span style="color:#ff3333">Error: ${data.error}</span>`;
+                }
+            } catch (err) {
+                osResponse.innerHTML = `<span style="color:var(--text-secondary)">root@asl-engine:~# ${query}</span><br><br><span style="color:#ff3333">Connection Refused: Target ASL Node Offline.</span><br><br><span style="color:#888">Ensure your local Ngrok tunnel is active and the API_BASE_URL is updated.</span>`;
+            }
+
+            osInput.disabled = false;
+            osInput.placeholder = "Enter query for Neural Brain...";
+            osInput.focus();
+        }
+    });
+}

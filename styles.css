@@ -188,3 +188,54 @@ body {
     color: var(--text-secondary);
     line-height: 1.5;
 }
+
+/* OS Terminal */
+.os-terminal {
+    position: absolute;
+    bottom: 40px;
+    left: 80px;
+    right: 80px;
+    background: rgba(10, 10, 10, 0.9);
+    border: 1px solid var(--border-color);
+    padding: 15px 25px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    border-radius: 4px;
+    pointer-events: auto;
+    z-index: 100;
+}
+
+.prompt {
+    color: var(--text-secondary);
+    font-family: 'Inter', monospace;
+    font-size: 0.85rem;
+}
+
+#os-command-input {
+    background: transparent;
+    border: none;
+    color: var(--text-primary);
+    font-family: 'Inter', monospace;
+    font-size: 0.9rem;
+    flex-grow: 1;
+    outline: none;
+}
+
+#os-response {
+    position: absolute;
+    bottom: 60px;
+    left: 0;
+    width: 100%;
+    background: rgba(10, 10, 10, 0.95);
+    border: 1px solid var(--border-color);
+    padding: 20px;
+    border-radius: 4px;
+    display: none;
+    max-height: 400px;
+    overflow-y: auto;
+    font-family: 'Inter', monospace;
+    font-size: 0.85rem;
+    color: var(--text-primary);
+    line-height: 1.6;
+}
