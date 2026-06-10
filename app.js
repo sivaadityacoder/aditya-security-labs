@@ -101,7 +101,10 @@ if (osInput) {
             try {
                 const res = await fetch(`${API_BASE_URL}/api/chat`, {
                     method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
+                    headers: { 
+                        'Content-Type': 'application/json',
+                        'Bypass-Tunnel-Reminder': 'true' 
+                    },
                     body: JSON.stringify({ message: query, history: [] })
                 });
 
